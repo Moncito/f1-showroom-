@@ -5,10 +5,10 @@ import { useGLTF } from '@react-three/drei'
 // Adjust scale, position [x, y, z], and rotation [x, y, z] in radians
 // for each car until it looks right. This is normal — every GLB is different.
 const CAR_CONFIGS = {
-    'ferrari': { scale: 1, position: [-0, -0.6, 2], rotation: [0, 0, 0] },
-    'mercedes': { scale: 1, position: [-0.5, -0.4, 0], rotation: [0, 0, 0] },
-    'mclaren': { scale: 1, position: [0, 0, 0], rotation: [0, 0, 0] },
-    'aston': { scale: 1, position: [0, 0, 0], rotation: [0, 0, 0] },
+    'ferrari': { scale: 0.72, position: [0, .5, 0], rotation: [0, 0, 0] },
+    'mercedes': { scale: 0.9, position: [0, 0.5, 0], rotation: [0, 0, 0] },
+    'mclaren': { scale: .86, position: [0, 1, 0], rotation: [0, 0, 0] },
+    'aston': { scale: .9, position: [0, .6, 0], rotation: [0, 0, 0] },
 }
 
 export default function CarModel({ path }) {

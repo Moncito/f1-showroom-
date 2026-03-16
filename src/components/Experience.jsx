@@ -23,7 +23,9 @@ export default function Experience({ modelPath, accentColor }) {
             {/* sunset gives cars a warm dramatic glow */}
             <Environment preset="sunset" backgroundBlurriness={1} />
 
-            <CarModel path={modelPath} />
+            <Center>
+                <CarModel path={modelPath} />
+            </Center>
 
             <OrbitControls
                 enablePan={false}
