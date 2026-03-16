@@ -6,6 +6,8 @@ import {
     ContactShadows,
 } from '@react-three/drei'
 import { useEffect, useRef } from 'react'
+import { EffectComposer, Bloom } from '@react-three/postprocessing'
+import gsap from 'gsap'
 import * as THREE from 'three'
 import CarModel from './CarModel'
 
@@ -49,10 +51,50 @@ function SceneClear() {
     return null
 }
 
-export default function Experience({ modelPath, accentColor }) {
+export default function Experience({ modelPath, accentColor, isTransitioning }) {
     const orbitRef = useRef()
+    const cameraRef = useRef()
     const carKey = modelPath.split('/').pop().replace('.glb', '')
     const light = LIGHTING[carKey] ?? LIGHTING.ferrari
+
+    // ── Camera pan effect on transition ──────────────────────────────────
+    useEffect(() => {
+        if (!cameraRef.current) return
+
+        if (isTransitioning) {
+            // Zoom out + tilt slightly
+            gsap.to(cameraRef.current.position, {
+                z: 7.5,
+                y: 1.5,
+                duration: 0.55,
+                ease: 'power2.inOut',
+            })
+            gsap.to(cameraRef.current, {
+                fov: 50,
+                duration: 0.55,
+                ease: 'power2.inOut',
+                onUpdate: () => {
+                    cameraRef.current.updateProjectionMatrix()
+                },
+            })
+        } else {
+            // Zoom back in — subtle presentation
+            gsap.to(cameraRef.current.position, {
+                z: 5,
+                y: 1.2,
+                duration: 0.7,
+                ease: 'power3.out',
+            })
+            gsap.to(cameraRef.current, {
+                fov: 42,
+                duration: 0.7,
+                ease: 'power3.out',
+                onUpdate: () => {
+                    cameraRef.current.updateProjectionMatrix()
+                },
+            })
+        }
+    }, [isTransitioning])
 
     return (
         <Canvas
@@ -62,9 +104,10 @@ export default function Experience({ modelPath, accentColor }) {
                 alpha: true,
                 premultipliedAlpha: false,
             }}
-            onCreated={({ gl, scene }) => {
+            onCreated={({ gl, scene, camera }) => {
                 gl.setClearColor(0x000000, 0)
                 scene.background = null
+                cameraRef.current = camera
             }}
             shadows
             style={{
@@ -133,10 +176,10 @@ export default function Experience({ modelPath, accentColor }) {
           No floor mesh at all — the shadow alone is enough to
           anchor the car and looks cleaner than a visible plane.  */}
             <ContactShadows
-                position={[0, -0.85, 0]}
-                opacity={0.8}
-                scale={16}
-                blur={3.5}
+                position={[0, -0.88, 0]}
+                opacity={0.35}
+                scale={18}
+                blur={5}
                 far={3}
                 color="#000000"
             />
@@ -156,6 +199,16 @@ export default function Experience({ modelPath, accentColor }) {
                 enableDamping
                 dampingFactor={0.05}
             />
+
+            {/* ── Post-processing: Bloom for subtle glow effect ─────────────────────────── */}
+            <EffectComposer>
+                <Bloom
+                    intensity={0.3}
+                    luminanceThreshold={0.7}
+                    luminanceSmoothing={0.97}
+                    mipmapBlur
+                />
+            </EffectComposer>
         </Canvas>
     )
 }

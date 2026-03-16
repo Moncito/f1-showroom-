@@ -11,6 +11,11 @@ const CARS = [
     team: 'Scuderia Ferrari',
     color: '#E8002D',
     lineColor: 'rgba(232, 0, 45, 0.05)',
+    driver: 'Charles Leclerc',
+    number: 16,
+    year: '2024',
+    season: 'F1 Championship',
+    stats: { power: '1050 hp', topSpeed: '340 km/h', '0-100': '2.6s', weight: '798 kg' },
   },
   {
     id: 'mercedes',
@@ -19,6 +24,11 @@ const CARS = [
     team: 'Mercedes-AMG Petronas',
     color: '#27F4D2',
     lineColor: 'rgba(39, 244, 210, 0.04)',
+    driver: 'Lewis Hamilton',
+    number: 44,
+    year: '2024',
+    season: 'F1 Championship',
+    stats: { power: '1050 hp', topSpeed: '345 km/h', '0-100': '2.6s', weight: '798 kg' },
   },
   {
     id: 'mclaren',
@@ -27,6 +37,11 @@ const CARS = [
     team: 'McLaren F1 Team',
     color: '#FF8000',
     lineColor: 'rgba(255, 128, 0, 0.05)',
+    driver: 'Lando Norris',
+    number: 4,
+    year: '2024',
+    season: 'F1 Championship',
+    stats: { power: '1050 hp', topSpeed: '342 km/h', '0-100': '2.6s', weight: '798 kg' },
   },
   {
     id: 'aston',
@@ -35,6 +50,11 @@ const CARS = [
     team: 'Aston Martin Aramco',
     color: '#229971',
     lineColor: 'rgba(34, 153, 113, 0.05)',
+    driver: 'Fernando Alonso',
+    number: 14,
+    year: '2024',
+    season: 'F1 Championship',
+    stats: { power: '1050 hp', topSpeed: '341 km/h', '0-100': '2.6s', weight: '798 kg' },
   },
 ]
 
@@ -136,7 +156,7 @@ export default function App() {
           transition: 'opacity 0.35s ease, transform 0.35s ease',
         }}
       >
-        <Experience modelPath={activeCar.path} accentColor={activeCar.color} />
+        <Experience modelPath={activeCar.path} accentColor={activeCar.color} isTransitioning={isTransitioning} />
       </div>
 
       {/* ── Layer 20: HTML overlay ─────────────────────────────────── */}
