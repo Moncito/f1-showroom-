@@ -57,7 +57,19 @@ const StatsPanel = forwardRef(({ car, isTransitioning }, ref) => {
             <div className="mb-6 text-right">
                 <div
                     className="text-5xl font-black leading-none mb-1"
-                    style={{ color: car.color }}
+                    style={{
+                        color: '#FFFFFF',
+                        textShadow: `
+                            0px 0px 10px ${car.color},
+                            0px 0px 20px ${car.color},
+                            2px 2px 4px ${car.color},
+                            -2px -2px 4px ${car.color},
+                            2px -2px 4px ${car.color},
+                            -2px 2px 4px ${car.color},
+                            4px 4px 12px rgba(0,0,0,0.8)
+                        `,
+                        letterSpacing: '0.05em'
+                    }}
                 >
                     {car.number}
                 </div>
